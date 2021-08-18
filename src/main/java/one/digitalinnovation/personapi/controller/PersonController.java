@@ -2,6 +2,7 @@ package one.digitalinnovation.personapi.controller;
 
 import one.digitalinnovation.personapi.dto.MessageResponseDTO;
 import one.digitalinnovation.personapi.dto.request.PersonDTO;
+import one.digitalinnovation.personapi.exception.PersonNotFoundException;
 import one.digitalinnovation.personapi.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,13 +25,18 @@ public class PersonController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MessageResponseDTO createPerson(@RequestBody @Valid PersonDTO personDTO) {
-        return personService.createPerson(personDTO);
+    public MessageResponseDTO save(@RequestBody @Valid PersonDTO personDTO) {
+        return personService.save(personDTO);
     }
 
     @GetMapping
-    public List<PersonDTO> listAll(){
-        return personService.listAll();
+    public List<PersonDTO> findAll(){
+        return personService.findAll();
+    }
+
+    @GetMapping(value = "/{id}")
+    public PersonDTO findById(@PathVariable Long id) throws PersonNotFoundException {
+        return personService.findById(id);
     }
 
 }
