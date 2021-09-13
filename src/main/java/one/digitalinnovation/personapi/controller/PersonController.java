@@ -14,7 +14,7 @@ import java.util.List;
 //ctrl+alt+o
 
 @RestController
-@RequestMapping(value = "/api/v1/people")
+@RequestMapping(value = "/v1/people")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonController {
 

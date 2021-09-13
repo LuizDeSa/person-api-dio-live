@@ -8,7 +8,7 @@ import one.digitalinnovation.personapi.mapper.PersonMapper;
 import one.digitalinnovation.personapi.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +26,7 @@ public class PersonService {
         this.personRepository = personRepository;
     }
 
-    @PostMapping
+    @Transactional
     public MessageResponseDTO save(PersonDTO personDTO){
         Person personToSave = mapper.toEntity(personDTO);
 
@@ -34,20 +34,24 @@ public class PersonService {
         return createMessageResponse(savedPerson, "Created person with ID ");
     }
 
+    @Transactional(readOnly = true)
     public List<PersonDTO> findAll() {
         List<Person> allPeople = personRepository.findAll();
         return allPeople.stream().map(mapper::toDTO).collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public PersonDTO findById(Long id) throws PersonNotFoundException {
         return mapper.toDTO(verifyIfExists(id));
     }
 
+    @Transactional
     public void deleteById(Long id) throws PersonNotFoundException {
         verifyIfExists(id);
         personRepository.deleteById(id);
     }
 
+    @Transactional
     public MessageResponseDTO updateById(Long id, PersonDTO personDTO) throws PersonNotFoundException {
 
         this.verifyIfExists(id);
