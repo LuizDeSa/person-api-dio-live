@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,18 +24,19 @@ public class PersonDTO {
 
     @NotEmpty
     @Size(min = 2, max = 100)
+    @Pattern(regexp = "^[[a-z][A-Z]]+$")
     private String firstName;
 
     @NotEmpty
     @Size(min = 2, max = 100)
+    @Pattern(regexp = "^[[a-z][A-Z]]+$")
     private String lastName;
 
     @NotEmpty
     @CPF
     private String cpf;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    @NotEmpty
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", locale = "pt-BR")
     private LocalDate birthDate;
 
     @Valid
