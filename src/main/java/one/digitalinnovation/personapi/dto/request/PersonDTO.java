@@ -34,6 +34,7 @@ public class PersonDTO {
     private String cpf;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    @NotEmpty
     private LocalDate birthDate;
 
     @Valid
