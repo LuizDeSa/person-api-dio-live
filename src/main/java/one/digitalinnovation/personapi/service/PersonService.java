@@ -27,11 +27,11 @@ public class PersonService {
     }
 
     @Transactional
-    public MessageResponseDTO save(PersonDTO personDTO){
+    public PersonDTO save(PersonDTO personDTO){
         Person personToSave = mapper.toEntity(personDTO);
 
         Person savedPerson =  personRepository.save(personToSave);
-        return createMessageResponse(savedPerson, "Created person with ID ");
+        return mapper.toDTO(savedPerson);
     }
 
     @Transactional(readOnly = true)

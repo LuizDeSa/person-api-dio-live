@@ -7,6 +7,7 @@ import one.digitalinnovation.personapi.exception.PersonNotFoundException;
 import one.digitalinnovation.personapi.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,15 +21,10 @@ public class PersonController {
 
     private PersonService personService;
 
-//    @Autowired
-//    public PersonController(PersonService personService) {
-//        this.personService = personService;
-//    }
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public MessageResponseDTO save(@RequestBody @Valid PersonDTO personDTO) {
-        return personService.save(personDTO);
+    public ResponseEntity<PersonDTO> save(@RequestBody @Valid PersonDTO personDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(personService.save(personDTO));
     }
 
     @GetMapping

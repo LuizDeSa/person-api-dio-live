@@ -27,13 +27,13 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(DateTimeParseException.class)
     protected ResponseEntity<ExceptionResponse> handlerDateTimeParseException(DateTimeParseException e){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(HttpStatus.NOT_FOUND, "Person Not Found.",e.getMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponse(HttpStatus.BAD_REQUEST, "Date Time Parse Error",e.getMessage()));
     }
 
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(
             HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ExceptionResponse response = new ExceptionResponse(status, "Conversion error", ex.getMessage());
+        ExceptionResponse response = new ExceptionResponse(status, "Http Message Not Readable", ex.getMessage());
 
         return ResponseEntity.status(status).body(response);
     }
@@ -42,7 +42,7 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> globalExceptionHandler(Exception ex, WebRequest request){
         List<String> details = new ArrayList<>();
         details.add(request.getDescription(false));
-        ExceptionResponse exceptionResponse = new ExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR, "asd", ex.getMessage());
+        ExceptionResponse exceptionResponse = new ExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Some error occurred", ex.getMessage());
         return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exceptionResponse);
     }
 
